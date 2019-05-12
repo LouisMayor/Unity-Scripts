@@ -7,18 +7,18 @@ public class Controller : MonoBehaviour, ISerialisedDataValidate
     public float TranslationSpeed { get; set; } = 1.0f;
     public float RotationSpeed { get; set; } = 50.0f;
 
-    [SerializeField] protected Transform _controllee;
+    [SerializeField] protected Transform m_controllee;
 
-    [SerializeField] protected KeyCode _forward;
-    [SerializeField] protected KeyCode _right;
-    [SerializeField] protected KeyCode _back;
-    [SerializeField] protected KeyCode _left;
+    [SerializeField] protected KeyCode m_forward = KeyCode.W;
+    [SerializeField] protected KeyCode m_right = KeyCode.D;
+    [SerializeField] protected KeyCode m_back = KeyCode.S;
+    [SerializeField] protected KeyCode m_left = KeyCode.A;
 
     private void Awake()
     {
-        if(_controllee == null)
+        if(m_controllee == null)
         {
-            _controllee = GetComponent<Transform>();
+            m_controllee = GetComponent<Transform>();
         }
     }
 
@@ -42,30 +42,30 @@ public class Controller : MonoBehaviour, ISerialisedDataValidate
             return;
         }
 
-        if (UnityEngine.Input.GetKey(_forward))
+        if (UnityEngine.Input.GetKey(m_forward))
         {
-            _controllee.localPosition += _controllee.forward * (TranslationSpeed * Time.unscaledDeltaTime);
+            m_controllee.localPosition += m_controllee.forward * (TranslationSpeed * Time.unscaledDeltaTime);
         }
 
-        if (UnityEngine.Input.GetKey(_right))
+        if (UnityEngine.Input.GetKey(m_right))
         {
-            _controllee.localPosition += _controllee.right * (TranslationSpeed * Time.unscaledDeltaTime);
+            m_controllee.localPosition += m_controllee.right * (TranslationSpeed * Time.unscaledDeltaTime);
         }
 
-        if (UnityEngine.Input.GetKey(_back))
+        if (UnityEngine.Input.GetKey(m_back))
         {
-            _controllee.localPosition += -_controllee.forward * (TranslationSpeed * Time.unscaledDeltaTime);
+            m_controllee.localPosition += -m_controllee.forward * (TranslationSpeed * Time.unscaledDeltaTime);
         }
 
-        if (UnityEngine.Input.GetKey(_left))
+        if (UnityEngine.Input.GetKey(m_left))
         {
-            _controllee.localPosition += -_controllee.right * (TranslationSpeed * Time.unscaledDeltaTime);
+            m_controllee.localPosition += -m_controllee.right * (TranslationSpeed * Time.unscaledDeltaTime);
         }
     }
 
     public virtual bool Validate()
     {
-        if (_controllee == null)
+        if (m_controllee == null)
         {
             return false;
         }

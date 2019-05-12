@@ -4,6 +4,9 @@ public class CameraController : Controller
 {
     public bool FlightMode { get; set; } = false;
 
+    [SerializeField] protected KeyCode m_up = KeyCode.Space;
+    [SerializeField] protected KeyCode m_down = KeyCode.LeftControl;
+
     protected override void OnStart()
     {
         if(!Validate())
@@ -12,9 +15,6 @@ public class CameraController : Controller
         }
 
         base.OnStart();
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public override void Input()
@@ -26,15 +26,25 @@ public class CameraController : Controller
             return;
         }
 
+        if(UnityEngine.Input.GetKey(m_up))
+        {
+            m_controllee.localPosition += m_controllee.up * (TranslationSpeed * Time.unscaledDeltaTime);
+        }
+
+        if(UnityEngine.Input.GetKey(m_down))
+        {
+            m_controllee.localPosition += -m_controllee.up * (TranslationSpeed * Time.unscaledDeltaTime);
+        }
+
         float xRotAxis = UnityEngine.Input.GetAxis("Mouse X");
         float yRotAxis = UnityEngine.Input.GetAxis("Mouse Y");
 
         if (!Mathf.Approximately(xRotAxis, 0.0f))
         {
-            float x = _controllee.localRotation.eulerAngles.x;
-            float z = _controllee.localRotation.eulerAngles.z;
-            float y = _controllee.localRotation.eulerAngles.y + xRotAxis * RotationSpeed * Time.unscaledDeltaTime;
-            _controllee.rotation = Quaternion.Euler(x, y, z);
+            float x = m_controllee.localRotation.eulerAngles.x;
+            float z = m_controllee.localRotation.eulerAngles.z;
+            float y = m_controllee.localRotation.eulerAngles.y + xRotAxis * RotationSpeed * Time.unscaledDeltaTime;
+            m_controllee.rotation = Quaternion.Euler(x, y, z);
         }
 
         if (!Mathf.Approximately(yRotAxis, 0.0f))
@@ -44,10 +54,10 @@ public class CameraController : Controller
                 yRotAxis = -yRotAxis;
             }
 
-            float x = _controllee.localRotation.eulerAngles.x + yRotAxis * RotationSpeed * Time.unscaledDeltaTime;
-            float z = _controllee.localRotation.eulerAngles.z;
-            float y = _controllee.localRotation.eulerAngles.y;
-            _controllee.rotation = Quaternion.Euler(x, y, z);
+            float x = m_controllee.localRotation.eulerAngles.x + yRotAxis * RotationSpeed * Time.unscaledDeltaTime;
+            float z = m_controllee.localRotation.eulerAngles.z;
+            float y = m_controllee.localRotation.eulerAngles.y;
+            m_controllee.rotation = Quaternion.Euler(x, y, z);
         }
 
 #if UNITY_EDITOR || UNITY_EDITOR_64 || UNITY_EDITOR_WIN

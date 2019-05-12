@@ -44,7 +44,7 @@ public class MainCamera : MonoBehaviour, ISerialisedDataValidate
             return false;
         }
 
-        if(m_controller == null)
+        if (m_controller == null)
         {
             return false;
         }
