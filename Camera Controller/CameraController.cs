@@ -26,7 +26,6 @@ public class CameraController : Controller
 
         base.Input();
 
-
         if(UnityEngine.Input.GetKey(m_up))
         {
             m_controllee.localPosition += m_controllee.up * (TranslationSpeed * Time.unscaledDeltaTime);
