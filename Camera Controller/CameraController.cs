@@ -19,12 +19,13 @@ public class CameraController : Controller
 
     public override void Input()
     {
-        base.Input();
-
         if (!UnityEngine.Input.GetKey(KeyCode.Mouse1))
         {
             return;
         }
+
+        base.Input();
+
 
         if(UnityEngine.Input.GetKey(m_up))
         {
